@@ -1,4 +1,3 @@
-import json
 import random
 from time import time, localtime
 import cityinfo
@@ -102,7 +101,7 @@ def get_birthday(birthday, year, today):
 
 
 def words():
-    txt = json()["今天小宝贝也要乖乖的呦~(*^▽^*)"]
+    txt = "今天小宝贝也要乖乖的呦~(*^▽^*)"
     return txt
 
 
