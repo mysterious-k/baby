@@ -1,3 +1,4 @@
+import json
 import random
 from time import time, localtime
 import cityinfo
@@ -10,7 +11,9 @@ import os
 
 def get_color():
     # 获取随机颜色
-    get_colors = lambda n: list(map(lambda i: "#" + "%06x" % random.randint(0, 0xFFFFFF), range(n)))
+    get_colors = lambda n: list(
+        map(lambda i: "#" + "%06x" % random.randint(0, 0xFFFFFF), range(n))
+    )
     color_list = get_colors(100)
     return random.choice(color_list)
 
@@ -20,8 +23,9 @@ def get_access_token():
     app_id = config["app_id"]
     # appSecret
     app_secret = config["app_secret"]
-    post_url = ("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={}&secret={}"
-                .format(app_id, app_secret))
+    post_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={}&secret={}".format(
+        app_id, app_secret
+    )
     try:
         access_token = get(post_url).json()['access_token']
     except KeyError:
@@ -42,11 +46,11 @@ def get_weather(province, city):
         sys.exit(1)
     # city_id = 101280101
     # 毫秒级时间戳
-    t = (int(round(time() * 1000)))
+    t = int(round(time() * 1000))
     headers = {
         "Referer": "http://www.weather.com.cn/weather1d/{}.shtml".format(city_id),
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-                      'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
     }
     url = "http://d1.weather.com.cn/dingzhi/{}.html?_={}".format(city_id, t)
     response = get(url, headers=headers)
@@ -74,7 +78,6 @@ def get_birthday(birthday, year, today):
         birthday = ZhDate(year, r_mouth, r_day).to_datetime().date()
         year_date = birthday
 
-
     else:
         # 获取国历生日的今年对应月和日
         birthday_month = int(birthday.split("-")[1])
@@ -98,12 +101,17 @@ def get_birthday(birthday, year, today):
     return birth_day
 
 
+def words():
+    txt = json()["今天小宝贝也要乖乖的呦~(*^▽^*)"]
+    return txt
+
+
 def get_ciba():
     url = "http://open.iciba.com/dsapi/"
     headers = {
         'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-                      'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
     }
     r = get(url, headers=headers)
     note_en = r.json()["content"]
@@ -111,8 +119,20 @@ def get_ciba():
     return note_ch, note_en
 
 
-def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature, note_ch, note_en):
-    url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
+def send_message(
+    to_user,
+    access_token,
+    city_name,
+    weather,
+    max_temperature,
+    min_temperature,
+    txt,
+    note_ch,
+    note_en,
+):
+    url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(
+        access_token
+    )
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     year = localtime().tm_year
     month = localtime().tm_mon
@@ -137,39 +157,16 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
         "url": "http://weixin.qq.com/download",
         "topcolor": "#FF0000",
         "data": {
-            "date": {
-                "value": "{} {}".format(today, week),
-                "color": get_color()
-            },
-            "city": {
-                "value": city_name,
-                "color": get_color()
-            },
-            "weather": {
-                "value": weather,
-                "color": get_color()
-            },
-            "min_temperature": {
-                "value": min_temperature,
-                "color": get_color()
-            },
-            "max_temperature": {
-                "value": max_temperature,
-                "color": get_color()
-            },
-            "love_day": {
-                "value": love_days,
-                "color": get_color()
-            },
-            "note_en": {
-                "value": note_en,
-                "color": get_color()
-            },
-            "note_ch": {
-                "value": note_ch,
-                "color": get_color()
-            }
-        }
+            "date": {"value": "{} {}".format(today, week), "color": get_color()},
+            "city": {"value": city_name, "color": get_color()},
+            "weather": {"value": weather, "color": get_color()},
+            "min_temperature": {"value": min_temperature, "color": get_color()},
+            "max_temperature": {"value": max_temperature, "color": get_color()},
+            "love_day": {"value": love_days, "color": get_color()},
+            "txt": {"value": txt, "color": get_color()},
+            "note_en": {"value": note_en, "color": get_color()},
+            "note_ch": {"value": note_ch, "color": get_color()},
+        },
     }
     for key, value in birthdays.items():
         # 获取距离下次生日的时间
@@ -183,7 +180,7 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
     headers = {
         'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-                      'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
     }
     response = post(url, headers=headers, json=data).json()
     if response["errcode"] == 40037:
@@ -219,8 +216,19 @@ if __name__ == "__main__":
     province, city = config["province"], config["city"]
     weather, max_temperature, min_temperature = get_weather(province, city)
     # 获取词霸每日金句
+    txt = words()
     note_ch, note_en = get_ciba()
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, city, weather, max_temperature, min_temperature, note_ch, note_en)
+        send_message(
+            user,
+            accessToken,
+            city,
+            weather,
+            max_temperature,
+            min_temperature,
+            txt,
+            note_ch,
+            note_en,
+        )
     os.system("pause")
