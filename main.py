@@ -101,8 +101,11 @@ def get_birthday(birthday, year, today):
 
 
 def words():
-    txt = "周宝贝今天也要乖乖的呦~(*^▽^*)\n乖乖宝贝就奖励一个大亲亲۶( ♡з♡)٩"
+    txt = "本座是来监督你喝水的ﾍ(･_|\n周宝贝今天要多喝点温水呦~(*^▽^*)\n不然本座就要打pp了(~￣▽￣)~"
     return txt
+# def words():
+#     txt = "周宝贝今天也要乖乖的呦~(*^▽^*)\n乖乖宝贝就奖励一个大亲亲۶( ♡з♡)٩"
+#     return txt
 
 
 def get_ciba():
