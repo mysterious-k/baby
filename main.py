@@ -100,12 +100,12 @@ def get_birthday(birthday, year, today):
     return birth_day
 
 
-def words():
-    txt = "我张医师今天是来赶走你体内的小病毒ﾍ(･_|\n巴啦啦能量~病毒快走开！\n不然休怪我从嘴巴里把你吸出来了(~￣▽￣)~"
-    return txt
 # def words():
-#     txt = "周宝贝今天也要乖乖的呦~(*^▽^*)\n乖乖宝贝就奖励一个大亲亲۶( ♡з♡)٩"
+#     txt = "我张医师今天是来赶走你体内的小病毒ﾍ(･_|\n巴啦啦能量~病毒快走开！\n不然休怪我从嘴巴里把你吸出来了(~￣▽￣)~"
 #     return txt
+def words():
+    txt = "周宝贝今天也要乖乖的呦~(*^▽^*)\n乖乖宝贝就奖励一个大亲亲۶( ♡з♡)٩"
+    return txt
 
 
 def get_ciba():
