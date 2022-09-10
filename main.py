@@ -100,12 +100,12 @@ def get_birthday(birthday, year, today):
     return birth_day
 
 
-def words():
-    txt = "中秋节不能和宝贝一起过,好伤心(｡╯︵╰｡)\n宝贝你一个人要乖乖的,还要快点来找我玩~我一个人好孤单(ಥ﹏ಥ)\n你看到这条消息的时候我就在想你了"
-    return txt
 # def words():
-#     txt = "周宝贝今天也要乖乖的呦~(*^▽^*)\n乖乖宝贝就奖励一个大亲亲۶( ♡з♡)٩"
+#     txt = "中秋节不能和宝贝一起过,好伤心(｡╯︵╰｡)\n宝贝你一个人要乖乖的,还要快点来找我玩~我一个人好孤单(ಥ﹏ಥ)\n你看到这条消息的时候我就在想你了"
 #     return txt
+def words():
+    txt = "周宝贝今天也要乖乖的呦~(*^▽^*)\n乖乖宝贝就奖励一个大亲亲۶( ♡з♡)٩"
+    return txt
 
 
 def get_ciba():
